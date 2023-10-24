@@ -1,0 +1,4 @@
+# false positive
+source-contains-prebuilt-javascript-object *tests/index.js*
+very-long-line-length-in-source-file *chardet/src/test/*
+very-long-line-length-in-source-file *tests/index.js*
