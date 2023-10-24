@@ -1,0 +1,4 @@
+Test-Command: cd chardet && sh -ex ../debian/nodejs/chardet/test
+Depends: @, @builddeps@
+Restrictions: allow-stderr
+Features: test-name=node-chardet-test

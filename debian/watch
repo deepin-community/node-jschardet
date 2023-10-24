@@ -1,0 +1,14 @@
+version=4
+opts=\
+repacksuffix=+dfsg,\
+repack,compression=xz,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-jschardet-$1/ \
+ https://github.com/aadsm/jschardet/tags .*/archive/.*/v?([\d\.]+).tar.gz group
+
+opts=\
+ctype=nodejs,\
+component=chardet,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-node-chardet-$1/ \
+ https://github.com/runk/node-chardet/tags .*/archive/.*/v?([\d\.]+).tar.gz group

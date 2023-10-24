@@ -1,0 +1,8 @@
+testing.js
+.DS_Store
+node_modules
+coverage
+npm-debug.log
+lib
+TODO.md
+package-lock.json

@@ -1,4 +1,26 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include /usr/share/dpkg/pkg-info.mk
+
+CHARDET_VERSION=$(shell a=$(DEB_VERSION_UPSTREAM) && echo $${a#*~})
 
 %:
 	dh $@
+
+override_dh_auto_build:
+	cp chardet/package.json debian/
+	perl -i -pe 's/0.0.0-development/$(CHARDET_VERSION)/' chardet/package.json
+	dh_auto_build --buildsystem=nodejs
+	webpack --config debian/webpack.config.js --output-library=jschardet \
+	--entry index.js --output-path ./dist --output-filename jschardet.js
+	terser dist/jschardet.js -o dist/jschardet.min.js
+
+override_dh_auto_clean:
+	if test -e debian/package.json; then \
+		mv debian/package.json chardet/package.json; \
+	fi
+	dh_auto_clean --buildsystem=nodejs

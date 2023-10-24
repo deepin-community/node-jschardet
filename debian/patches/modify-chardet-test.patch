@@ -1,0 +1,43 @@
+Description: workaround ts-jest which is not packaged
+Author: Xavier Guimard <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2020-12-14
+
+--- a/chardet/jest.config.js
++++ b/chardet/jest.config.js
+@@ -1,9 +1,8 @@
+ module.exports = {
+   testEnvironment: 'node',
+   testRegex: '.*test.ts$',
+-  transform: { '^.+\\.ts?$': 'ts-jest' },
+   moduleFileExtensions: ['ts', 'js', 'json'],
+   rootDir: 'src',
+-  collectCoverage: true,
++  collectCoverage: false,
+   coverageDirectory: '<rootDir>/../coverage',
+ };
+--- a/chardet/src/index.test.ts
++++ b/chardet/src/index.test.ts
+@@ -1,6 +1,5 @@
+-import * as chardet from '.';
+-import defaultChardet from '.';
+-import fs from 'fs';
++const chardet = require('chardet');
++const fs = require('fs');
+ 
+ describe('chardet', () => {
+ 
+@@ -17,13 +16,6 @@
+     { 'confidence': 2, 'name': 'windows-1251', 'lang': 'ru' },
+   ];
+ 
+-  it('has both named and default exports', () => {
+-    expect(defaultChardet.analyse).toBe(chardet.analyse);
+-    expect(defaultChardet.detect).toBe(chardet.detect);
+-    expect(defaultChardet.detectFile).toBe(chardet.detectFile);
+-    expect(defaultChardet.detectFileSync).toBe(chardet.detectFileSync);
+-  });
+-
+   describe('#detect', () => {
+     it('should detect encoding', () => {
+       expect(chardet.detect(fs.readFileSync(path))).toBe('UTF-8');
