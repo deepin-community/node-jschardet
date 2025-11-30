@@ -1,5 +1,0 @@
-@babel/parser
-@babel/types
-@types/istanbul-lib-coverage
-@types/istanbul-lib-report
-@types/node
